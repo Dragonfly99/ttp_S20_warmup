@@ -28,3 +28,41 @@ FROM customer_totals;
 
 --YOUR TURN: 
 --What is the average number of films we have per genre (category)?
+
+
+
+
+
+
+
+--Question 1
+WITH store_average AS(
+    SELECT store_id as store, COUNT(inventory_id) as stock
+    FROM inventory
+    Group By store_id) 
+SELECT store, AVG(stock)
+FROM store_average
+GROUP BY store;
+
+
+--Question 2
+WITH lifetime_spending AS(
+    SELECT staff_id as staff, SUM(amount) as total
+    FROM payment
+    Group By staff_id) 
+SELECT staff, AVG(total)
+FROM lifetime_spending
+GROUP BY staff;
+
+
+
+--Question 3
+WITH genre_average AS(
+    SELECT name as genre, COUNT(film_id) as film
+    FROM category
+    INNER JOIN film_category
+    USING (category_id)
+    Group By genre) 
+SELECT genre, AVG(film)
+FROM genre_average
+GROUP BY genre;
